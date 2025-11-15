@@ -11,8 +11,6 @@
  * - Bun
  * - Deno
  * - Node.js
- * - Browser
- * - Cloudflare Workers
  * - Unknown
  */
 
@@ -23,9 +21,7 @@ export type Runtime =
   | "Bun"
   | "Deno"
   | "Node.js"
-  | "Browser"
-  | "Cloudflare Worker"
-  | "unknown";
+  | "Unknown";
 
 /**
  * Detects the current JavaScript runtime environment.
@@ -37,7 +33,7 @@ export type Runtime =
  * @example
  * ```ts
  * const runtime: Runtime = getRuntime();
- * console.log(runtime); // "Deno", "Node.js", "Bun", etc.
+ * console.log(runtime); // "Deno", "Node.js", "Bun".
  * ```
  */
 export function getRuntime(): Runtime {
@@ -53,27 +49,14 @@ export function getRuntime(): Runtime {
     return "Node.js";
   }
 
-  if (typeof window !== "undefined" && typeof window.document !== "undefined") {
-    return "Browser";
-  }
-
-  if (
-    typeof WebSocketPair !== "undefined" &&
-    typeof fetch !== "undefined" &&
-    typeof Response !== "undefined"
-  ) {
-    return "Cloudflare Worker";
-  }
-
-  return "unknown";
+  return "Unknown";
 }
 
 /**
  * Returns environment variables for a given runtime.
  *
  * Provides a unified interface to access environment variables across
- * different JavaScript runtimes. For runtimes without native environment
- * variables (Browser, Cloudflare Worker, unknown), it returns an empty object.
+ * different JavaScript runtimes.
  *
  * @param runtime - The runtime environment string
  * @returns An object containing environment variables as key-value pairs
@@ -106,8 +89,6 @@ export function getEnv(runtime: Runtime): Record<string, string | undefined> {
       }
       return {};
 
-    case "Browser":
-    case "Cloudflare Worker":
     default:
       return {};
   }
@@ -140,17 +121,3 @@ declare const Deno: {
     toObject(): Record<string, string | undefined>;
   };
 } | undefined;
-
-/**
- * Browser global window object.
- */
-declare const window: {
-  document?: unknown;
-} | undefined;
-
-/**
- * Cloudflare Workers globals.
- */
-declare const WebSocketPair: unknown;
-declare const fetch: unknown;
-declare const Response: unknown;
