@@ -1,4 +1,4 @@
-import type { StandardSchema } from "./standard-schema.ts";
+import type { StandardSchemaV1 } from "./standard.ts";
 
 /**
  * A schema representing a boolean value.
@@ -6,7 +6,7 @@ import type { StandardSchema } from "./standard-schema.ts";
  * Validates boolean values, numeric 0/1, and string representations
  * such as `"true"`, `"false"`, `"1"`, `"0"`.
  */
-export interface BooleanSchema extends StandardSchema<boolean> {
+export interface BooleanSchema extends StandardSchemaV1<boolean> {
   /** The literal type of the schema */
   type: "boolean";
 
@@ -31,24 +31,31 @@ export interface BooleanSchema extends StandardSchema<boolean> {
 export function boolean(message: string = "Expected a boolean"): BooleanSchema {
   return {
     type: "boolean",
-    message,
+    message: message,
     "~standard": {
       validate(value) {
         if (typeof value === "boolean") return { value };
 
         if (typeof value === "string" || value instanceof String) {
           const primitive = value.toString();
+
           if (["TRUE", "True", "true", "1"].includes(primitive)) {
             return { value: true };
           }
+
           if (["FALSE", "False", "false", "0"].includes(primitive)) {
             return { value: false };
           }
         }
 
         if (typeof value === "number") {
-          if (value === 1) return { value: true };
-          if (value === 0) return { value: false };
+          if (value === 1) {
+            return { value: true };
+          }
+
+          if (value === 0) {
+            return { value: false };
+          }
         }
 
         return { issues: [{ message }] };

@@ -1,4 +1,4 @@
-import type { StandardSchema } from "./standard-schema.ts";
+import type { StandardSchemaV1 } from "./standard.ts";
 import type { OptionalSchema } from "./optional.ts";
 
 /**
@@ -9,13 +9,13 @@ import type { OptionalSchema } from "./optional.ts";
 export interface ObjectSchema<
   TShape extends Record<
     string,
-    | StandardSchema<string | number | boolean>
-    | OptionalSchema<StandardSchema<string | number | boolean>>
+    | StandardSchemaV1<string | number | boolean>
+    | OptionalSchema<StandardSchemaV1<string | number | boolean>>
   >,
 > extends
-  StandardSchema<
+  StandardSchemaV1<
     Record<string, unknown>,
-    { [K in keyof TShape]: StandardSchema.InferOutput<TShape[K]> }
+    { [K in keyof TShape]: StandardSchemaV1.InferOutput<TShape[K]> }
   > {
   /** The literal type of the schema */
   type: "object";
@@ -45,8 +45,8 @@ export interface ObjectSchema<
 export function object<
   TShape extends Record<
     string,
-    | StandardSchema<string | number | boolean>
-    | OptionalSchema<StandardSchema<string | number | boolean>>
+    | StandardSchemaV1<string | number | boolean>
+    | OptionalSchema<StandardSchemaV1<string | number | boolean>>
   >,
 >(shape: TShape, message = "Expected an object"): ObjectSchema<TShape> {
   return {
@@ -62,7 +62,7 @@ export function object<
         }
 
         const result: Record<string, unknown> = {};
-        const issues: StandardSchema.Issue[] = [];
+        const issues: StandardSchemaV1.Issue[] = [];
 
         for (const key in shape) {
           const fieldSchema = shape[key];
@@ -85,15 +85,15 @@ export function object<
 
         return issues.length > 0
           ? { issues }
-          : { value: result } as StandardSchema.SuccessResult<
-            { [K in keyof TShape]: StandardSchema.InferOutput<TShape[K]> }
+          : { value: result } as StandardSchemaV1.SuccessResult<
+            { [K in keyof TShape]: StandardSchemaV1.InferOutput<TShape[K]> }
           >;
       },
 
       types: {
         input: {} as Record<string, unknown>,
         output: {} as {
-          [K in keyof TShape]: StandardSchema.InferOutput<TShape[K]>;
+          [K in keyof TShape]: StandardSchemaV1.InferOutput<TShape[K]>;
         },
       },
     },

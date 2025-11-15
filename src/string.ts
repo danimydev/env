@@ -1,4 +1,4 @@
-import type { StandardSchema } from "./standard-schema.ts";
+import type { StandardSchemaV1 } from "./standard.ts";
 
 /**
  * A schema representing a string value.
@@ -10,7 +10,7 @@ import type { StandardSchema } from "./standard-schema.ts";
  * - Returns the validated string on success.
  * - Returns a failure with a single issue containing the provided message on failure.
  */
-export interface StringSchema extends StandardSchema<string> {
+export interface StringSchema extends StandardSchemaV1<string> {
   /** The literal type of the schema */
   type: "string";
 
