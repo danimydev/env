@@ -1,24 +1,19 @@
 # @danimydev/env
 
 A TypeScript-first, runtime-safe environment variable reader. Works in Node.js,
-Deno and Bun.
+Deno and Bun. If you want you can just copy the source code or install it via
+[jsr](https://jsr.io/@danimydev/env).
 
 ## Usage
 
 ```typescript
-import env, { boolean, number, object, optional, string } from "@danimydev/env";
+import env, { boolean, number, optional, string } from "@danimydev/env";
 
-const config = env(
-  object({
-    NODE_ENV: string(),
-    PORT: number(),
-    DEBUG: optional(boolean()),
-  }),
-);
-
-console.log(config.NODE_ENV);
-console.log(config.PORT);
-console.log(config.DEBUG);
+const config = env({
+  NODE_ENV: string(), // string,
+  PORT: number(), // number,
+  DEBUG: optional(boolean()), // boolean | undefined
+});
 ```
 
 ## Highlights
