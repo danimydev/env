@@ -1,4 +1,4 @@
-import type { StandardSchema } from "./standard-schema.ts";
+import type { StandardSchemaV1 } from "./standard.ts";
 
 /**
  * Validates and parses an input according to a schema.
@@ -12,15 +12,15 @@ import type { StandardSchema } from "./standard-schema.ts";
  * ```
  *
  * @typeParam TSchema - The schema type.
- * @param schema - The `StandardSchema` to validate against.
+ * @param schema - The `StandardSchemaV1` to validate against.
  * @param input - The value to validate.
  * @returns The validated value.
  * @throws {Error} If validation fails.
  */
-export function parse<TSchema extends StandardSchema>(
+export function parse<TSchema extends StandardSchemaV1>(
   schema: TSchema,
   input: unknown,
-): StandardSchema.InferOutput<TSchema> {
+): StandardSchemaV1.InferOutput<TSchema> {
   const result = schema["~standard"].validate(input);
 
   if (result.issues) {

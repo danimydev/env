@@ -1,14 +1,16 @@
 /** The Standard Schema interface. */
-export interface StandardSchema<Input = unknown, Output = Input> {
+export interface StandardSchemaV1<Input = unknown, Output = Input> {
   /** The Standard Schema properties. */
-  readonly "~standard": StandardSchema.Props<Input, Output>;
+  readonly "~standard": StandardSchemaV1.Props<Input, Output>;
 }
 
-export declare namespace StandardSchema {
+export declare namespace StandardSchemaV1 {
   /** The Standard Schema properties interface. */
   export interface Props<Input = unknown, Output = Input> {
     /** Validates unknown input values. */
-    readonly validate: (value: unknown) => Result<Output>;
+    readonly validate: (
+      value: unknown,
+    ) => Result<Output>;
     /** Inferred types associated with the schema. */
     readonly types?: Types<Input, Output> | undefined;
   }
@@ -53,12 +55,12 @@ export declare namespace StandardSchema {
   }
 
   /** Infers the input type of a Standard Schema. */
-  export type InferInput<Schema extends StandardSchema> = NonNullable<
+  export type InferInput<Schema extends StandardSchemaV1> = NonNullable<
     Schema["~standard"]["types"]
   >["input"];
 
   /** Infers the output type of a Standard Schema. */
-  export type InferOutput<Schema extends StandardSchema> = NonNullable<
+  export type InferOutput<Schema extends StandardSchemaV1> = NonNullable<
     Schema["~standard"]["types"]
   >["output"];
 }

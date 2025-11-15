@@ -1,11 +1,11 @@
-import type { StandardSchema } from "./standard-schema.ts";
+import type { StandardSchemaV1 } from "./standard.ts";
 
 /**
  * A schema representing a numeric value.
  *
  * Validates that the input is a number or a string representing a number.
  */
-export interface NumberSchema extends StandardSchema<number> {
+export interface NumberSchema extends StandardSchemaV1<number> {
   /** The literal type of the schema */
   type: "number";
 

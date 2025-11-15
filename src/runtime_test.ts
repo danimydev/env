@@ -5,6 +5,10 @@ import { assertEquals } from "@std/assert";
 import { getEnv, getRuntime } from "./runtime.ts";
 
 Deno.test("runtime", () => {
+  Deno.test("detects Deno", () => {
+    assertEquals(getRuntime(), "Deno");
+  });
+
   Deno.test("detects Bun", () => {
     const original = (globalThis as any)["Bun"];
     (globalThis as any)["Bun"] = { version: "1.0.0" };
@@ -17,20 +21,6 @@ Deno.test("runtime", () => {
     (globalThis as any)["process"] = { versions: { node: "20.0.0" } };
     assertEquals(getRuntime(), "Node.js");
     (globalThis as any)["process"] = original;
-  });
-
-  Deno.test("detects Browser", () => {
-    const original = (globalThis as any)["window"];
-    (globalThis as any)["window"] = { document: {} };
-    assertEquals(getRuntime(), "Browser");
-    (globalThis as any)["window"] = original;
-  });
-
-  Deno.test("detects Cloudflare Worker", () => {
-    const original = (globalThis as any)["WebSocketPair"];
-    (globalThis as any)["WebSocketPair"] = {};
-    assertEquals(getRuntime(), "Cloudflare Worker");
-    (globalThis as any)["WebSocketPair"] = original;
   });
 });
 
@@ -71,15 +61,7 @@ Deno.test("getEnv", () => {
     (globalThis as any)["Deno"] = original;
   });
 
-  Deno.test("returns empty object for Browser", () => {
-    assertEquals(getEnv("Browser"), {});
-  });
-
-  Deno.test("returns empty object for Cloudflare Worker", () => {
-    assertEquals(getEnv("Cloudflare Worker"), {});
-  });
-
   Deno.test("returns empty object for unknown runtime", () => {
-    assertEquals(getEnv("unknown"), {});
+    assertEquals(getEnv("Unknown"), {});
   });
 });

@@ -1,4 +1,4 @@
-import type { StandardSchema } from "./standard-schema.ts";
+import type { StandardSchemaV1 } from "./standard.ts";
 
 /**
  * A schema representing an optional value.
@@ -6,8 +6,8 @@ import type { StandardSchema } from "./standard-schema.ts";
  * Wraps another schema and allows `undefined` or `null` values.
  */
 export interface OptionalSchema<
-  TSchema extends StandardSchema<string | number | boolean>,
-> extends StandardSchema<StandardSchema.InferOutput<TSchema> | undefined> {
+  TSchema extends StandardSchemaV1<string | number | boolean>,
+> extends StandardSchemaV1<StandardSchemaV1.InferOutput<TSchema> | undefined> {
   /** The literal type of the schema */
   type: "optional";
 
@@ -32,7 +32,7 @@ export interface OptionalSchema<
  * @returns An `OptionalSchema` instance.
  */
 export function optional<
-  TSchema extends StandardSchema<string | number | boolean>,
+  TSchema extends StandardSchemaV1<string | number | boolean>,
 >(schema?: TSchema, message = "Value is optional"): OptionalSchema<TSchema> {
   return {
     type: "optional",
@@ -43,6 +43,7 @@ export function optional<
         if (value === undefined || value === null || schema === undefined) {
           return { value: undefined };
         }
+
         return schema["~standard"].validate(value);
       },
     },
