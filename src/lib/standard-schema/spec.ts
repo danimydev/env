@@ -7,10 +7,14 @@ export interface StandardSchemaV1<Input = unknown, Output = Input> {
 export declare namespace StandardSchemaV1 {
   /** The Standard Schema properties interface. */
   export interface Props<Input = unknown, Output = Input> {
+    /** The version number of the standard. */
+    readonly version: 1;
+    /** The vendor name of the schema library. */
+    readonly vendor: string;
     /** Validates unknown input values. */
     readonly validate: (
       value: unknown,
-    ) => Result<Output>;
+    ) => Result<Output> | Promise<Result<Output>>;
     /** Inferred types associated with the schema. */
     readonly types?: Types<Input, Output> | undefined;
   }
