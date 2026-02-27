@@ -1,13 +1,13 @@
 import { assertEquals, assertInstanceOf } from "@std/assert";
-import * as envValibot from "@danimydev/env/schemas/valibot";
-import * as envZod from "@danimydev/env/schemas/zod";
-import { SchemaError } from "./lib/standard-schema/utils.ts";
+import { SchemaError } from "@standard-schema/utils";
+import * as valibotSchemas from "@danimydev/env/schemas/valibot";
+import * as zodSchemas from "@danimydev/env/schemas/zod";
 import { env } from "./mod.ts";
 
 Deno.test("env", async () => {
   assertEquals(
     await env(
-      { PORT: envValibot.number() },
+      { PORT: valibotSchemas.number() },
       { PORT: 8080 },
     ),
     { PORT: 8080 },
@@ -15,7 +15,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { PORT: envValibot.number() },
+      { PORT: valibotSchemas.number() },
       { PORT: "8080" },
     ),
     { PORT: 8080 },
@@ -23,7 +23,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envValibot.boolean() },
+      { IS_ENABLED: valibotSchemas.flag() },
       { IS_ENABLED: true },
     ),
     { IS_ENABLED: true },
@@ -31,7 +31,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envValibot.boolean() },
+      { IS_ENABLED: valibotSchemas.flag() },
       { IS_ENABLED: "true" },
     ),
     { IS_ENABLED: true },
@@ -39,7 +39,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envValibot.boolean() },
+      { IS_ENABLED: valibotSchemas.flag() },
       { IS_ENABLED: "on" },
     ),
     { IS_ENABLED: true },
@@ -47,7 +47,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envValibot.boolean() },
+      { IS_ENABLED: valibotSchemas.flag() },
       { IS_ENABLED: "1" },
     ),
     { IS_ENABLED: true },
@@ -55,7 +55,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envValibot.boolean() },
+      { IS_ENABLED: valibotSchemas.flag() },
       { IS_ENABLED: false },
     ),
     { IS_ENABLED: false },
@@ -63,7 +63,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envValibot.boolean() },
+      { IS_ENABLED: valibotSchemas.flag() },
       { IS_ENABLED: "false" },
     ),
     { IS_ENABLED: false },
@@ -71,7 +71,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envValibot.boolean() },
+      { IS_ENABLED: valibotSchemas.flag() },
       { IS_ENABLED: "off" },
     ),
     { IS_ENABLED: false },
@@ -79,7 +79,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envValibot.boolean() },
+      { IS_ENABLED: valibotSchemas.flag() },
       { IS_ENABLED: "0" },
     ),
     { IS_ENABLED: false },
@@ -87,7 +87,7 @@ Deno.test("env", async () => {
 
   try {
     await env(
-      { IS_ENABLED: envValibot.boolean() },
+      { IS_ENABLED: valibotSchemas.flag() },
       [],
     );
   } catch (e) {
@@ -96,7 +96,7 @@ Deno.test("env", async () => {
 
   try {
     await env(
-      { IS_ENABLED: envValibot.boolean() },
+      { IS_ENABLED: valibotSchemas.flag() },
       { IS_ENABLED: "invalid" },
     );
   } catch (e) {
@@ -107,7 +107,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { PORT: envZod.number() },
+      { PORT: zodSchemas.number() },
       { PORT: 8080 },
     ),
     { PORT: 8080 },
@@ -115,7 +115,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { PORT: envZod.number() },
+      { PORT: zodSchemas.number() },
       { PORT: "8080" },
     ),
     { PORT: 8080 },
@@ -123,7 +123,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envZod.boolean() },
+      { IS_ENABLED: zodSchemas.flag() },
       { IS_ENABLED: true },
     ),
     { IS_ENABLED: true },
@@ -131,7 +131,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envZod.boolean() },
+      { IS_ENABLED: zodSchemas.flag() },
       { IS_ENABLED: "true" },
     ),
     { IS_ENABLED: true },
@@ -139,7 +139,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envZod.boolean() },
+      { IS_ENABLED: zodSchemas.flag() },
       { IS_ENABLED: "on" },
     ),
     { IS_ENABLED: true },
@@ -147,7 +147,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envZod.boolean() },
+      { IS_ENABLED: zodSchemas.flag() },
       { IS_ENABLED: "1" },
     ),
     { IS_ENABLED: true },
@@ -155,7 +155,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envZod.boolean() },
+      { IS_ENABLED: zodSchemas.flag() },
       { IS_ENABLED: false },
     ),
     { IS_ENABLED: false },
@@ -163,7 +163,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envZod.boolean() },
+      { IS_ENABLED: zodSchemas.flag() },
       { IS_ENABLED: "false" },
     ),
     { IS_ENABLED: false },
@@ -171,7 +171,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envZod.boolean() },
+      { IS_ENABLED: zodSchemas.flag() },
       { IS_ENABLED: "off" },
     ),
     { IS_ENABLED: false },
@@ -179,7 +179,7 @@ Deno.test("env", async () => {
 
   assertEquals(
     await env(
-      { IS_ENABLED: envZod.boolean() },
+      { IS_ENABLED: zodSchemas.flag() },
       { IS_ENABLED: "0" },
     ),
     { IS_ENABLED: false },
@@ -187,7 +187,7 @@ Deno.test("env", async () => {
 
   try {
     await env(
-      { IS_ENABLED: envZod.boolean() },
+      { IS_ENABLED: zodSchemas.flag() },
       [],
     );
   } catch (e) {
@@ -196,7 +196,7 @@ Deno.test("env", async () => {
 
   try {
     await env(
-      { IS_ENABLED: envZod.boolean() },
+      { IS_ENABLED: zodSchemas.flag() },
       { IS_ENABLED: "invalid" },
     );
   } catch (e) {

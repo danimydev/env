@@ -23,7 +23,7 @@
 import { z } from "@zod/zod";
 
 /**
- * Creates a flexible boolean schema that accepts common truthy/falsy
+ * Creates a flexible flag schema that accepts common truthy/falsy
  * string formats in addition to native booleans.
  *
  * ## Accepted Inputs
@@ -43,18 +43,18 @@ import { z } from "@zod/zod";
  * ## Example
  *
  * ```ts
- * import { boolean } from "@danimydev/env/schemas/zod";
+ * import { flag } from "@danimydev/env/schemas/zod";
  *
- * const Bool = boolean();
+ * const Flag = flag();
  *
- * Bool.parse("on");   // true
- * Bool.parse("0");    // false
- * Bool.parse("nope"); // ❌ error
+ * Flag.parse("on");   // true
+ * Flag.parse("0");    // false
+ * Flag.parse("nope"); // ❌ error
  * ```
  *
  * @returns A Zod schema producing a strict `boolean`.
  */
-export function boolean(): z.ZodPipe<
+export function flag(): z.ZodPipe<
   z.ZodTransform<unknown, unknown>,
   z.ZodBoolean
 > {
