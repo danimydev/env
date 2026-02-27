@@ -1,17 +1,12 @@
-import { assertEquals } from "@std/assert";
-import { boolean, number } from "./mod.ts";
+import { assertObjectMatch } from "@std/assert";
+import { flag, number } from "./mod.ts";
 
-Deno.test("zod", () => {
-  Deno.test("boolean", () => {
-    assertEquals(boolean()["~standard"].validate("true"), { value: true });
-    assertEquals(boolean()["~standard"].validate("on"), { value: true });
-    assertEquals(boolean()["~standard"].validate("1"), { value: true });
-    assertEquals(boolean()["~standard"].validate("false"), { value: false });
-    assertEquals(boolean()["~standard"].validate("off"), { value: false });
-    assertEquals(boolean()["~standard"].validate("0"), { value: false });
-  });
-
-  Deno.test("number", () => {
-    assertEquals(number()["~standard"].validate("1"), { value: 1 });
-  });
+Deno.test("schemas/zod", () => {
+  assertObjectMatch(flag()["~standard"].validate("true"), { value: true });
+  assertObjectMatch(flag()["~standard"].validate("on"), { value: true });
+  assertObjectMatch(flag()["~standard"].validate("1"), { value: true });
+  assertObjectMatch(flag()["~standard"].validate("false"), { value: false });
+  assertObjectMatch(flag()["~standard"].validate("off"), { value: false });
+  assertObjectMatch(flag()["~standard"].validate("0"), { value: false });
+  assertObjectMatch(number()["~standard"].validate("1"), { value: 1 });
 });

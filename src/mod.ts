@@ -13,8 +13,8 @@
  * The main exported function is `env()`.
  */
 
-import type { StandardSchemaV1 } from "./lib/standard-schema/spec.ts";
-import { SchemaError } from "./lib/standard-schema/utils.ts";
+import type { StandardSchemaV1 } from "@standard-schema/spec";
+import { SchemaError } from "@standard-schema/utils";
 
 /**
  * @internal

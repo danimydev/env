@@ -9,7 +9,7 @@
  *
  * ## Included Schemas
  *
- * - `boolean()` — Accepts `"true"`, `"false"`, `"on"`, `"off"`, `"1"`, `"0"`, etc.
+ * - `flag()` — Accepts `"true"`, `"false"`, `"on"`, `"off"`, `"1"`, `"0"`, etc.
  * - `number()` — Accepts numeric strings, converts with `Number(value)`.
  *
  * Both schemas:
@@ -25,8 +25,8 @@
 import * as v from "@valibot/valibot";
 
 /**
- * Creates a flexible boolean schema that accepts common "truthy" and "falsy"
- * string values in addition to native boolean values.
+ * Creates a flexible flag schema that accepts common "truthy" and "falsy"
+ * string values in addition to native flag values.
  *
  * ## Accepted Inputs
  *
@@ -53,19 +53,19 @@ import * as v from "@valibot/valibot";
  * ## Example
  *
  * ```ts
- * import { boolean } from "@danimydev/env/schemas/valibot";
+ * import { flag } from "@danimydev/env/schemas/valibot";
  *
- * const Bool = boolean();
+ * const Flag = flag();
  *
- * Bool.parse("on");      // true
- * Bool.parse("false");   // false
- * Bool.parse(true);      // true
- * Bool.parse("invalid"); // ❌ error
+ * Flag.parse("on");      // true
+ * Flag.parse("false");   // false
+ * Flag.parse(true);      // true
+ * Flag.parse("invalid"); // ❌ error
  * ```
  *
  * @returns A Valibot schema that outputs a strict `boolean`.
  */
-export function boolean(): v.SchemaWithPipe<
+export function flag(): v.SchemaWithPipe<
   readonly [
     v.UnionSchema<
       [v.BooleanSchema<undefined>, v.StringSchema<undefined>],

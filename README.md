@@ -19,8 +19,8 @@ const typeSafeEnv = await env(
   Deno.env.toObject(), // or process.env in Node.js
 );
 
-console.log(typeSafeEnv.NODE_ENV);   // "development" | "production"
-console.log(typeSafeEnv.PORT);       // number
+console.log(typeSafeEnv.NODE_ENV); // "development" | "production"
+console.log(typeSafeEnv.PORT); // number
 console.log(typeSafeEnv.IS_ENABLED); // boolean
 ```
 
